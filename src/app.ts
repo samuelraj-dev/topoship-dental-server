@@ -6,7 +6,7 @@ import logger from "./utils/logger";
 import createServer from "./utils/server";
 import connectDB from "./utils/connectDB";
 
-const port = config.get<number>('port') || process.env.PORT;
+const port = config.get<number>('port');
 const app = createServer();
 
 // MAIN FUNCTION - RUNS SERVER
