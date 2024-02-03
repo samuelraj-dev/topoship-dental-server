@@ -2,10 +2,11 @@
   "name": "topoship-dental-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "build/src/app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node build/src/app.js",
-    "build": "tsc && mv node_modules ./build && cp package.json build/package.json && cp package-lock.json build/package-lock.json && cp tsconfig.json build/tsconfig.json",
+    "start": "node src/app.js",
+    "build": "tsc",
+    "postbuild": "mv node_modules ./build && cp package.json build/package.json && cp package-lock.json build/package-lock.json && cp tsconfig.json build/tsconfig.json",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "test": "jest"
   },
