@@ -15,6 +15,7 @@ export default function createServer() {
   // MIDDLEWARES
   app.use(cors({
     origin: config.get<string>('origin'),
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   }))
   app.use(cookieParser());
