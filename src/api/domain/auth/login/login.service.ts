@@ -118,7 +118,7 @@ export function signAccessToken(
     { ...payload, session },
     "accessTokenPrivateKey",
     {
-      expiresIn: config.get<string>('accessTokenTtl'),
+      expiresIn: config.get<string>('accessTokenTtl') || process.env.ACCESS_TOKEN_TTL,
     }
   )
 
@@ -140,7 +140,7 @@ export async function signRefreshToken(
     { ...payload, session },
     "refreshTokenPrivateKey",
     {
-      expiresIn: config.get<string>('refreshTokenTtl'),
+      expiresIn: config.get<string>('refreshTokenTtl') || process.env.REFRESH_TOKEN_TTL,
     }
   )
 

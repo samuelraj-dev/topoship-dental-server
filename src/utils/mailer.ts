@@ -16,7 +16,13 @@ const smtp = config.get<{
   host: string,
   port: number,
   secure: boolean,
-}>('smtp');
+}>('smtp') || {
+  user: process.env.SMTP_USER,
+  pass: process.env.SMTP_PASSWORD,
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: process.env.SMTP_SECURE,
+};
 
 const transporter = nodemailer.createTransport({
   ...smtp,

@@ -60,7 +60,9 @@ export async function resetPasswordHandler(req: Request, res: Response) {
   
   clinicUser.password_reset_code = null;
 
-  const salt = await bcrypt.genSalt(config.get<number>('saltWorkFactor'));
+  // @ts-ignore
+  const saltWorkFactor = config.get<number>('saltWorkFactor') || parseInt(process.env.SALT_WORK_FACTOR);
+  const salt = await bcrypt.genSalt(saltWorkFactor);
   const hash = await bcrypt.hashSync(password, salt);
   clinicUser.password = hash;
 

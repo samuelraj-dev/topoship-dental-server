@@ -145,7 +145,9 @@ export async function getClinicData(
       .where("clinic_data.created_at = :created_at", { created_at: istDate.toISOString().replace(/\.\d+/, ".000") })
       .getOne();
 
-  const salt = await bcrypt.genSalt(config.get<number>('saltWorkFactor'));
+  // @ts-ignore
+  const saltWorkFactor = config.get<number>('saltWorkFactor') || parseInt(process.env.SALT_WORK_FACTOR);
+  const salt = await bcrypt.genSalt(saltWorkFactor);
   const hash = await bcrypt.hashSync(password, salt);
 
   await AppDataSource
