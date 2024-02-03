@@ -2,9 +2,9 @@
   "name": "topoship-dental-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "build/src/app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "tsc && node build/src/app.js",
+    "start": "tsc && node src/app.js",
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "test": "jest"
