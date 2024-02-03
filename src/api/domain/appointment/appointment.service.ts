@@ -59,9 +59,9 @@ export async function createAppointment(
     .where("master_patient.patient_id = :id", { id: appointmentInput.patient_id })
     .getOne();
 
-    if(!patient) throw new Error("patient not found")
+    console.log(`patient not found ${appointmentInput.patient_id}`)
+    if(!patient) throw new Error('Patient not found');
 
-    // newAppointment.appointment_id = appointmentInput.appointment_id;
     newAppointment.doctor_name = appointmentInput.doctor_name;
     newAppointment.patient_id = appointmentInput.patient_id;
     newAppointment.appointment_date = appointmentInput.appointment_date;
@@ -84,8 +84,6 @@ export async function createAppointment(
       .innerJoinAndSelect("appointment.patient", "patient")
       .where("appointment.created_at = :created_at", { created_at: istDate.toISOString().replace(/\.\d+/, ".000") })
       .getOne();
-
-    // const data = await AppDataSource.
 
     console.log(data);
 

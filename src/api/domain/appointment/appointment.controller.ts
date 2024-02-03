@@ -26,7 +26,7 @@ export async function createAppointmentHandler(req: Request, res: Response) {
 // export async function createPatientHandler(req: Request<{}, {}, CreatePatientInput["body"]>, res: Response) {
 
   const patient = await createAppointment(req.body);
-  if (!patient) { return res.sendStatus(404); }
+  if (!patient) { return res.status(404).json(patient); }
   return res.status(200).json({ message: 'Appointment Created...', patient });
   
 }
