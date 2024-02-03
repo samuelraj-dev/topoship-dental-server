@@ -14,7 +14,7 @@ const app = createServer();
 function main() {
 
   app.listen(port, async () => {
-    logger.info(`app running on port: ${port}`);
+    logger.info(`app running on port: ${port}, ${config.get<string>('origin')}`);
     
     await connectDB();
   });
