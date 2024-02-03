@@ -20,4 +20,8 @@ export default {
     port: "SMTP_PORT",
     secure: "SMTP_SECURE",
   },
+  logLevel: "LOG_LEVEL",
+  saltWorkFactor: "SALT_WORK_FACTOR",
+  accessTokenTtl: "ACCESS_TOKEN_TTL",
+  refreshTokenTtl: "REFRESH_TOKEN_TTL",
 }
