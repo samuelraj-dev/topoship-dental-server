@@ -5,7 +5,7 @@
   "main": "build/src/app.js",
   "scripts": {
     "start": "node build/src/app.js",
-    "build": "tsc && cp -rf node_modules/ build/node_modules/ && cp package.json build/package.json && cp package-lock.json build/package-lock.json && cp tsconfig.json build/tsconfig.json",
+    "build": "tsc && mv node_modules ./build && cp package.json build/package.json && cp package-lock.json build/package-lock.json && cp tsconfig.json build/tsconfig.json",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "test": "jest"
   },
