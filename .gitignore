@@ -1,5 +1,5 @@
 info
-# build
+build
 config/default.ts
 config/test.ts
 
