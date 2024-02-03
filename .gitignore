@@ -2,6 +2,7 @@ info
 build
 config/default.ts
 config/test.ts
+temp.json
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 docker-compose.override.example.yml
