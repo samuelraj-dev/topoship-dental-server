@@ -20,6 +20,8 @@ import {
   getSessionById,
 } from "./login.service";
 
+import logger from "../../../../utils/logger";
+
 /**
  * Handles the creation of user sessions.
  * Retrieves clinic user data based on the request body,
@@ -30,14 +32,18 @@ export async function createSessionHandler(req: Request, res: Response) {
 
   const data = await getClinicUser(req.body);
   if (!data.success) { return res.status(404).json(data); };
+  logger.info("getClinicUser: ", data);
 
   // @ts-ignore
   const session = await createSession(data.clinicAuth);
+  logger.info("session: ", session)
 
   // @ts-ignore
   const accessToken = signAccessToken(data.clinicAuth, session);
+  logger.info("access: ", accessToken)
   // @ts-ignore
   const refreshToken = await signRefreshToken(data.clinicAuth, session);
+  logger.info("refresh: ", refreshToken)
 
   res.cookie("accessToken", accessToken, {
     maxAge: 3.154e10, //15min
