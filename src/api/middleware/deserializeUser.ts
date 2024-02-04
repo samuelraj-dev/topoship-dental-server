@@ -32,12 +32,13 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
       res.setHeader('x-access-token', newAccessToken);
 
       res.cookie("accessToken", newAccessToken, {
-        maxAge: 900000, //15min
+        maxAge: 3.154e10, //15min
         httpOnly: true,
-        domain: 'localhost',
+        domain: 'topoship-server-test.onrender.com',
+        // domain: 'localhost',
         path: '/',
         sameSite: "strict",
-        secure: false,
+        secure: true,
       });
     }
 
