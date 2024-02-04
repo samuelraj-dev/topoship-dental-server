@@ -41,20 +41,22 @@ export async function createSessionHandler(req: Request, res: Response) {
 
   res.cookie("accessToken", accessToken, {
     maxAge: 3.154e10, //15min
-    httpOnly: true,
-    domain: 'localhost',
+    httpOnly: false,
+    domain: 'topoship-server-test.onrender.com',
+    // domain: 'localhost',
     path: '/',
     sameSite: "strict",
-    secure: false,
+    secure: true,
   });
 
   res.cookie("refreshToken", refreshToken, {
     maxAge: 3.154e10, //1yr
-    httpOnly: true,
-    domain: 'localhost',
+    httpOnly: false,
+    domain: 'topoship-server-test.onrender.com',
+    // domain: 'localhost',
     path: '/',
     sameSite: "strict",
-    secure: false,
+    secure: true,
   });
 
   return res.status(200).json({
