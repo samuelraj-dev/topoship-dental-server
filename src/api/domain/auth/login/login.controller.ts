@@ -38,12 +38,16 @@ export async function createSessionHandler(req: Request, res: Response) {
 
   // @ts-ignore
   const accessToken = signAccessToken(data.clinicAuth, session);
-  // logger.info({
-  //   name: "access",
-  //   token: accessToken
-  // })
+  logger.info({
+    name: "access",
+    token: accessToken
+  })
   // @ts-ignore
   const refreshToken = await signRefreshToken(data.clinicAuth, session);
+  logger.info({
+    name: "refresh",
+    token: refreshToken
+  })
 
   res.cookie("accessToken", accessToken, {
     maxAge: 3.154e10, //15min
