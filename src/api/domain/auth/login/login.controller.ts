@@ -38,10 +38,10 @@ export async function createSessionHandler(req: Request, res: Response) {
 
   // @ts-ignore
   const accessToken = signAccessToken(data.clinicAuth, session);
-  logger.info({
-    name: "access",
-    token: accessToken
-  })
+  // logger.info({
+  //   name: "access",
+  //   token: accessToken
+  // })
   // @ts-ignore
   const refreshToken = await signRefreshToken(data.clinicAuth, session);
 
