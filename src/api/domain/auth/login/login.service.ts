@@ -9,6 +9,7 @@ import { AppDataSource } from "../../../../utils/data-source";
 import { signJwt, verifyJwt } from "../../../../utils/jwt";
 
 import { getClinicById } from "../register/register.service";
+import logger from "../../../../utils/logger";
 
 /**
  * Retrieves clinic user data based on login input.
@@ -22,51 +23,52 @@ export async function getClinicUser(
   try {
 
     const { phone_number, password } = loginInput
-
+    
     const clinicAuth = await AppDataSource
-      .getRepository(ClinicAuth)
-      .createQueryBuilder("clinic_auth")
-      .where("clinic_auth.phone_number = :phone_number", { phone_number })
-      .getOne();
-
+    .getRepository(ClinicAuth)
+    .createQueryBuilder("clinic_auth")
+    .where("clinic_auth.phone_number = :phone_number", { phone_number })
+    .getOne();
+    
     if (!clinicAuth) {
       return {
         success: false,
         message: "Invalid phone number or password",
       }
     }
-
+    
     if(!clinicAuth.activation && clinicAuth.password == "NA") {
       return {
         success: false,
         message: "Please activate your account. Go to register"
       }
     }
-
+    
     if(!clinicAuth.verified) {
       return {
         success: false,
         message: "Please verify your account to login"
       }
     }
-
+    
     const isValid = await bcrypt.compare(password, clinicAuth.password);
-
+    
     if (!isValid) {
       return {
         success: false,
         message: "Invalid phone number or password",
       }
     }
-
+    
     return {
       success: true,
       clinicAuth
       // clinicUser: omit(clinicUser, 'password'),
     };
+
     
   } catch (error: any) {
-
+    
     throw new Error(error.message);
     
   }
