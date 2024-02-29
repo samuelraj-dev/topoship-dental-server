@@ -1,6 +1,7 @@
 import { Entity, PrimaryColumn, Column, BaseEntity, BeforeInsert, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import { AppDataSource } from "../utils/data-source";
 import { Patient } from "./MstPatient";
+import { VisitTracker } from "./VisitTracker";
 
 export enum Status {
   PENDING = 'pending',
@@ -38,9 +39,8 @@ export class Appointment extends BaseEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at!: Date;
 
-  // @OneToOne(() => Patient, patient => patient.appointment, {onDelete: 'CASCADE'})
-  // @JoinColumn()
-  // patient!: Patient;
+  @OneToOne(() => VisitTracker, visit => visit.appointment)
+  visit!: Patient;
 
   @ManyToOne(() => Patient, patient => patient.appointments, { onDelete: 'SET NULL' })
   patient!: Patient;

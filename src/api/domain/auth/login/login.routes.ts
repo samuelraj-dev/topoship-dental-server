@@ -4,15 +4,12 @@ import requireUser from "../../../middleware/requireUser";
 const router = express.Router();
 
 import {
-  createSessionHandler,
-  getCurrentUserHandler,
-  refreshAccessTokenHandler,
-  deleteSessionHandler,
+  loginClinicHandler,
 } from "./login.controller";
 
-router.post('/', createSessionHandler);
-router.get('/me', getCurrentUserHandler);
-router.get('/refresh', refreshAccessTokenHandler);
-router.delete('/delete', requireUser, deleteSessionHandler)
+router.post('/', loginClinicHandler);
+// router.get('/me', getCurrentUserHandler);
+// router.get('/refresh', refreshAccessTokenHandler);
+// router.delete('/delete', requireUser, deleteSessionHandler)
 
 export default router;

@@ -4,8 +4,8 @@ import {
   getAllMedicine,
   getMedicine,
   createMedicine,
-  // updatePatient,
-  // deletePatient
+  updateMedicine,
+  deleteMedicine
 } from "./medicine.service";
 
 export async function getAllMedicineHandler(req: Request, res: Response) {
@@ -32,9 +32,13 @@ export async function createMedicineHandler(req: Request, res: Response) {
 }
 
 export async function updateMedicineHandler(req: Request, res: Response) {
-  
+  const medicine = await updateMedicine(req.body, req.params.id);
+  if (!medicine) { return res.sendStatus(404); }
+  return res.status(200).json({ message: 'Medicine Updated...', medicine });
 }
 
 export async function deleteMedicineHandler(req: Request, res: Response) {
-  
+  const medicine = await deleteMedicine(req.params.id);
+  if (!medicine) { return res.sendStatus(404); }
+  return res.status(200).json({ message: 'Medicine Deleted...', medicine });
 }

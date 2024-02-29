@@ -11,6 +11,7 @@ import {
     updateAppointmentHandler,
     deleteAppointmentHandler,
 } from "./appointment.controller";
+// import { upload } from "utils/image-uploder";
 
 router.get('/', getAllAppointmentHandler)
 router.get('/:id', getAppointmentHandler)

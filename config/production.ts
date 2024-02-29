@@ -6,11 +6,4 @@ export default {
     saltWorkFactor: 10,
     accessTokenTtl: "1y",
     refreshTokenTtl: "1y",
-    smtp: {
-      user: 'th7qlnopntl3k4tg@ethereal.email',
-      pass: 'gev94tu9WbHzjkqMws',
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-    },
   }

@@ -1,39 +1,22 @@
-import { Entity, PrimaryColumn, Column, BaseEntity, BeforeInsert } from "typeorm";
-import { AppDataSource } from "../utils/data-source";
+import { Entity, PrimaryColumn, Column, BaseEntity, BeforeInsert, ManyToOne } from "typeorm";
+import { AppDataSource } from "../utils/data-source"
+import { Prescription } from "./Prescription";
 
 enum MealRelation {
-  BEFORE = 'before',
-  AFTER = 'after'
+    BEFORE = 'before',
+    AFTER = 'after'
 }
 
-@Entity({ name: 'master_medicine' })
-export class Medicine extends BaseEntity {
+@Entity({ name: 'medicine_detail' })
+export class MedicineDetail extends BaseEntity {
   @PrimaryColumn({ type: 'varchar', length: 20 })
-  medicine_id!: string;
+  medicine_detail_id!: string;
+
+  @ManyToOne(() => Prescription, prescription => prescription.medicines, { onDelete: 'SET NULL' })
+  prescription!: Prescription;
 
   @Column({ type: 'varchar', length: 50 })
   medicine_name!: string;
-
-  @Column({ type: 'text', nullable: true })
-  description!: string;
-
-  @Column({ type: 'varchar', length: 25, nullable: true })
-  manufacturer!: string;
-
-  @Column({ type: 'int' })
-  unit_price!: number;
-
-  @Column({ type: 'int', nullable: true })
-  stock_quantity!: number;
-
-  @Column({ type: 'boolean', default: false })
-  is_prescription_required!: boolean;
-
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  dental_use!: string;
-
-  @Column({ type: 'boolean', default: false })
-  requires_refrigeration!: boolean;
 
   @Column({ type: 'int', default: 0 })
   morning_dose!: number;
@@ -68,14 +51,14 @@ export class Medicine extends BaseEntity {
     const currCode = `${currentYear.toString().slice(2)}${currentMonth.toString().padStart(2, '0')}`;
 
     const latestSelf = await AppDataSource
-      .getRepository(Medicine)
-      .createQueryBuilder('master_medicine')
-      .orderBy('master_medicine.created_at', 'DESC')
+      .getRepository(MedicineDetail)
+      .createQueryBuilder('medicine_detail')
+      .orderBy('medicine_detail.created_at', 'DESC')
       .getOne();
 
     let nextId;
     if (latestSelf) {
-      const lastSelfId = latestSelf.medicine_id;
+      const lastSelfId = latestSelf.medicine_detail_id;
       const lastSelfCode = lastSelfId.substring(4, 8);
 
       if (lastSelfCode === currCode) {
@@ -89,7 +72,7 @@ export class Medicine extends BaseEntity {
       nextId = `MED_${currCode}0001`;
     }
 
-    this.medicine_id = nextId;
+    this.medicine_detail_id = nextId;
   }
 
 }

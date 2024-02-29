@@ -1,6 +1,7 @@
 import { Entity, PrimaryColumn, Column, BaseEntity, BeforeInsert, OneToOne, OneToMany } from "typeorm";
 import { AppDataSource } from "../utils/data-source";
 import { Appointment } from "./TrnAppointment";
+import { VisitTracker } from "./VisitTracker";
 
 export enum Gender {
   MALE = 'male',
@@ -79,10 +80,10 @@ export class Patient extends BaseEntity {
   @Column({ type: 'varchar', length: 45, nullable: true })
   city!: string;
 
-  @Column({ type: 'enum', enum: State })
+  @Column({ type: 'enum', enum: State, default: State.TamilNadu })
   state!: State;
 
-  @Column({ type: 'enum', enum: Country })
+  @Column({ type: 'enum', enum: Country, default: Country.India })
   country!: Country;
 
   @Column({ type: 'varchar', length: 10, nullable: true })
@@ -105,6 +106,9 @@ export class Patient extends BaseEntity {
 
   @OneToMany(() => Appointment, appointment => appointment.patient)
   appointments!: Appointment[];
+
+  // @OneToMany(() => VisitTracker, visit => visit.patient)
+  // visits!: VisitTracker[];
 
   @BeforeInsert()
   async createPatientId() {

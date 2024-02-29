@@ -1,6 +1,31 @@
 import { AppDataSource } from "../../../utils/data-source";
 import { Patient, PatientInput } from "../../../entity/MstPatient";
 
+export async function getPatientCount()
+{
+  try {
+    
+    const totalCount = await AppDataSource
+      .getRepository(Patient)
+      .count();
+
+    const lastMonthCountRes = await AppDataSource
+      .getRepository(Patient)
+      .createQueryBuilder()
+      .select("COUNT(*)", "count")
+      .where(`EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM CURRENT_DATE)`)
+      .andWhere(`EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM CURRENT_DATE)`)
+      .getRawOne();
+
+    const lastMonthCount = parseInt(lastMonthCountRes.count);
+
+    return {totalCount, lastMonthCount};
+
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
 export async function getAllPatient()
 {
   try {

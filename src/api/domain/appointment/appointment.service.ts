@@ -30,7 +30,10 @@ export async function getAppointment({ id }: { id: string })
     const data = await AppDataSource
     .getRepository(Appointment)
     .createQueryBuilder("appointment")
-    .innerJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("appointment.visit", "visit")
+    .leftJoinAndSelect("visit.prescription", "prescription")
+    .leftJoinAndSelect("prescription.medicines", "medicines")
     .where("appointment.appointment_id = :id", { id })
     .getOne();
 

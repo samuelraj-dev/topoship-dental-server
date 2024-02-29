@@ -5,9 +5,17 @@ import {
   getPatient,
   createPatient,
   updatePatient,
-  deletePatient
+  deletePatient,
+  getPatientCount
 } from "./patient.service";
 import { PatientInput } from "./patient.schema";
+
+export async function getPatientCountHandler(req: Request, res: Response) {
+
+  const patientsCount = await getPatientCount();
+  if (!patientsCount) { return res.sendStatus(404); }
+  return res.status(200).json(patientsCount);
+}
 
 export async function getAllPatientHandler(req: Request, res: Response) {
 

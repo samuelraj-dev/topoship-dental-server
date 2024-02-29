@@ -5,6 +5,7 @@ import validateResource from "../../middleware/validateResource";
 const router = express.Router();
 
 import {
+    getPatientCountHandler,
     getAllPatientHandler,
     getPatientHandler,
     createPatientHandler,
@@ -13,6 +14,7 @@ import {
 } from "./patient.controller";
 
 // router.get('/', validateResource(patientSchema), getAllPatientHandler)
+router.get('/patient-count', getPatientCountHandler)
 router.get('/', getAllPatientHandler)
 router.get('/:id', getPatientHandler)
 router.post('/', createPatientHandler)
