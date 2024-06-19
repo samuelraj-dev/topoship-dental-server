@@ -1,6 +1,8 @@
 import { AppDataSource } from "../../../utils/data-source";
 import { Appointment } from "../../../entity/TrnAppointment";
 import { Patient } from "../../../entity/MstPatient";
+
+import { mysqlDateFormatter } from "../../../utils/date";
 // import { CreatePatientInput } from "./appointment.schema";
 
 export async function getAllAppointment()
@@ -15,6 +17,54 @@ export async function getAllAppointment()
         "appointment.appointment_date": "ASC",    // Sorting by date in ascending order
         "appointment.appointment_time": "ASC",    // Sorting by time in ascending order
       })
+      .getMany();
+
+    return data;
+
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getUpcomingAppointment()
+{
+  try {
+
+    const currentDate = mysqlDateFormatter(new Date());
+    
+    const data = await AppDataSource
+      .getRepository(Appointment)
+      .createQueryBuilder("appointment")
+      .innerJoinAndSelect("appointment.patient", "patient")
+      .orderBy({
+        "appointment.appointment_date": "ASC",
+        "appointment.appointment_time": "ASC",
+      })
+      .where("appointment.appointment_date >= :currentDate", { currentDate })
+      .getMany();
+
+    return data;
+
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getTodayAppointment()
+{
+  try {
+
+    const currentDate = mysqlDateFormatter(new Date());
+    
+    const data = await AppDataSource
+      .getRepository(Appointment)
+      .createQueryBuilder("appointment")
+      .innerJoinAndSelect("appointment.patient", "patient")
+      .orderBy({
+        "appointment.appointment_date": "ASC",
+        "appointment.appointment_time": "ASC",
+      })
+      .where("appointment.appointment_date = :currentDate", { currentDate })
       .getMany();
 
     return data;

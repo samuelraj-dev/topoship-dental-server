@@ -5,7 +5,9 @@ import {
   getAppointment,
   createAppointment,
   updateAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getUpcomingAppointment,
+  getTodayAppointment
 } from "./appointment.service";
 
 export async function getAllAppointmentHandler(req: Request, res: Response) {
@@ -13,6 +15,20 @@ export async function getAllAppointmentHandler(req: Request, res: Response) {
     const appointments = await getAllAppointment();
     if (!appointments) { return res.sendStatus(404); }
     return res.status(200).json(appointments);
+}
+
+export async function getUpcomingAppointmentHandler(req: Request, res: Response) {
+
+  const appointments = await getUpcomingAppointment();
+  if (!appointments) { return res.sendStatus(404); }
+  return res.status(200).json(appointments);
+}
+
+export async function getTodayAppointmentHandler(req: Request, res: Response) {
+
+  const appointments = await getTodayAppointment();
+  if (!appointments) { return res.sendStatus(404); }
+  return res.status(200).json(appointments);
 }
 
 export async function getAppointmentHandler(req: Request, res: Response) {
