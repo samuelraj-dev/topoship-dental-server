@@ -6,6 +6,8 @@ import logger from "./utils/logger";
 import createServer from "./utils/server";
 import connectDB from "./utils/connectDB";
 
+import "./keep_alive.js";
+
 // const port = config.get<number>('port') || process.env.PORT;
 const port = config.get<number>('port');
 const app = createServer();
